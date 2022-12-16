@@ -7,11 +7,11 @@ enum ErrorTypes {
   InvalidMongoId = 'InvalidMongoId',
 }
 
-class ProdutoService implements IService<IDisk> {
-    private _Produto:IModel<IDisk>;
+class DiskService implements IService<IDisk> {
+    private _Disk:IModel<IDisk>;
 
     constructor(model:IModel<IDisk>) {
-        this._Produto = model;
+        this._Disk = model;
     }
 
     public async create(obj:unknown):Promise<IDisk> {
@@ -20,37 +20,37 @@ class ProdutoService implements IService<IDisk> {
         if (parsed.success === false) {
             throw parsed.error;
         }
-        const result = await this._Produto.create(parsed.data);
+        const result = await this._Disk.create(parsed.data);
         return result;
     }
 
     public async read():Promise<IDisk[]> {
-        const Produto = await this._Produto.read();
-        if (!Produto) throw new Error(ErrorTypes.EntityNotFound);
-        return Produto;
+        const Disk = await this._Disk.read();
+        if (!Disk) throw new Error(ErrorTypes.EntityNotFound);
+        return Disk;
     }
 
     public async readOne(_id:string):Promise<IDisk> {
-        const Produto = await this._Produto.readOne(_id);
-        if (!Produto) throw new Error(ErrorTypes.EntityNotFound);
-        return Produto;
+        const Disk = await this._Disk.readOne(_id);
+        if (!Disk) throw new Error(ErrorTypes.EntityNotFound);
+        return Disk;
     }
 
     public async update(id:string, obj: IDisk | object):Promise<IDisk> {
-        const Produto = await this._Produto.update(id, obj);
+        const Disk = await this._Disk.update(id, obj);
         const parsed = DiskZodSchema.safeParse(obj);
         if (parsed.success === false) {
             throw parsed.error;
         }
-        if (!Produto) throw new Error(ErrorTypes.EntityNotFound);
-        return Produto;
+        if (!Disk) throw new Error(ErrorTypes.EntityNotFound);
+        return Disk;
     }
 
     public async delete(id:string):Promise<IDisk> {
-        const Produto = await this._Produto.delete(id);
-        if (!Produto) throw new Error(ErrorTypes.EntityNotFound);
-        return Produto;
+        const Disk = await this._Disk.delete(id);
+        if (!Disk) throw new Error(ErrorTypes.EntityNotFound);
+        return Disk;
     }
 }
 
-export default ProdutoService;
+export default DiskService;
