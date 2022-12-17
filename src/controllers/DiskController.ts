@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { IDisk } from '../interfaces/IDisks';
-import { IService } from '../interfaces/IServices';
+import { IServiceDisks } from '../interfaces/IServices';
 
 export default class DiskController {
-    constructor(private _service: IService<IDisk>) { }
+    constructor(private _service: IServiceDisks<IDisk>) { }
 
     public async create(
         req: Request,

@@ -6,7 +6,7 @@ export const DiskZodSchema = z.object({
         invalid_type_error: 'title must be a string',
     }).min(1, { message: 'title must be 1 or more characters long' }),
     details: z.object({
-        Característica: z.string({
+        Caracteristica: z.string({
             required_error: 'Característica is required',
             invalid_type_error: 'Característica must be a string',
         }).min(1, { message: 'Característica must be 1 or more characters long' }),
@@ -22,11 +22,11 @@ export const DiskZodSchema = z.object({
             required_error: 'Formato is required',
             invalid_type_error: 'Formato must be a string',
         }).min(1, { message: 'Formato must be 1 or more characters long' }),
-        Lançamento: z.string({
+        Lancamento: z.string({
             required_error: 'Lançamento is required',
             invalid_type_error: 'Lançamento must be a string',
         }).min(1, { message: 'Lançamento must be 1 or more characters long' }),
-        Observação: z.string({
+        Observacao: z.string({
             required_error: 'Observação is required',
             invalid_type_error: 'Observação must be a string',
         }).min(1, { message: 'Observação must be 1 or more characters long' })

@@ -1,20 +1,17 @@
+import { ErrorTypes } from './../errors/catalog';
 import { IDisk, DiskZodSchema } from './../interfaces/IDisks';
-import { IService } from '../interfaces/IServices';
+import { IServiceDisks } from '../interfaces/IServices';
 import { IModel } from '../interfaces/IModel';
 
-enum ErrorTypes {
-  EntityNotFound = 'EntityNotFound',
-  InvalidMongoId = 'InvalidMongoId',
-}
 
-class DiskService implements IService<IDisk> {
+class DiskService implements IServiceDisks<IDisk> {
     private _Disk:IModel<IDisk>;
 
     constructor(model:IModel<IDisk>) {
         this._Disk = model;
     }
 
-    public async create(obj:unknown):Promise<IDisk> {
+    public async create(obj:IDisk):Promise<IDisk> {
         const parsed = DiskZodSchema.safeParse(obj);
     
         if (parsed.success === false) {

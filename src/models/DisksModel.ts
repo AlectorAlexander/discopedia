@@ -5,12 +5,12 @@ import MongoModel from './MongoModel';
 export const DiskMongooseSchema = new Schema<IDisk>({
     title: String,  
     details: {
-        Característica: String,
-        Gravadora: String,
-        Produtor: String,
+        Caracteristica: String,
         Formatos: String,
-        Lançamento: String,
-        Observação: String,
+        Gravadora: String,
+        Lancamento: String,
+        Observacao: String,
+        Produtor: String,
     },  
     artist: String,
     musics: Array<string>,
@@ -19,10 +19,10 @@ export const DiskMongooseSchema = new Schema<IDisk>({
     updated: Date,
 });
 
-class Disk extends MongoModel<IDisk> {
+class DiskModel extends MongoModel<IDisk> {
     constructor(model = mongooseCreateModel('Disk', DiskMongooseSchema)) {
         super(model);
     }
 }
 
-export default Disk;
+export default DiskModel;
