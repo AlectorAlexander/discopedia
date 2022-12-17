@@ -1,6 +1,7 @@
 import { isValidObjectId, Model } from 'mongoose';
 import { IModel } from '../interfaces/IModel';
 import { ErrorTypes } from '../errors/catalog';
+import { UpdateResult } from 'mongodb';
 
 abstract class MongoModel<T> implements IModel<T> {
     protected _model:Model<T>;
@@ -30,6 +31,12 @@ abstract class MongoModel<T> implements IModel<T> {
         return result;
     }
 
+    public async readOneByDisco(_diskId:string):Promise<T | null> {
+        if (!isValidObjectId(_diskId)) throw Error(ErrorTypes.InvalidMongoId);
+        const result = await this._model.findOne({ discos: _diskId });
+        return result;
+    }
+
     public async readOneByEmail(email:string):Promise<T | null> {
         const result = await this._model.findOne({ email });
         return result;
@@ -38,6 +45,15 @@ abstract class MongoModel<T> implements IModel<T> {
     public async update(id:string, obj: object):Promise<T | null> {
         if (!isValidObjectId(id)) throw Error(ErrorTypes.InvalidMongoId);
         const result = await this._model.findByIdAndUpdate(id, obj);
+        return result;
+    }
+
+    public async updateOneDisk(id:string, diskId: string):Promise<UpdateResult | null> {
+        if (!isValidObjectId(id)) throw Error(ErrorTypes.InvalidMongoId);
+        const result = await this._model.updateOne(
+            { _id: id },
+            { $push: { discos: diskId } }
+        );
         return result;
     }
 

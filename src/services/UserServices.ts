@@ -1,12 +1,20 @@
+import { IDisk } from './../interfaces/IDisks';
+import { UpdateResult } from 'mongodb';
 import { ErrorTypes } from './../errors/catalog';
 import { ErrorService, errorService } from './../interfaces/IErrors';
-import jwt_decode, { InvalidTokenError, JwtPayload } from 'jwt-decode';
+import jwt_decode, { JwtPayload } from 'jwt-decode';
 import { sign, SignOptions } from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { IUser, UserZodSchema } from '../interfaces/IUser';
 import { IServiceUsers } from '../interfaces/IServices';
 import { IModel } from '../interfaces/IModel';
 import { Error } from 'mongoose';
+import DiskService from './DisksServices';
+import DiskModel from '../models/DisksModel';
+
+const Disk = new DiskModel();
+const diskService = new DiskService(Disk);
+
 
 const saltRounds = 10;
 
@@ -97,4 +105,20 @@ export default class UserServices implements IServiceUsers<IUser> {
             return { error };
         }
     };
+
+    public async updateUserDisks(id:string, diskId: string):Promise<UpdateResult> {
+        const User = await this._User.readOne(id);
+        if (!User) throw new Error(ErrorTypes.EntityNotFound);
+        
+        const DiskUser = await this._User.readOneByDisco(diskId);
+        if (DiskUser) throw new Error(ErrorTypes.uAlreadyHaveIt);
+        
+        const Disk = await diskService.readOne(diskId);
+        if (!Disk) throw new Error(ErrorTypes.EntityNotFound);
+        
+        const response = await this._User.updateOneDisk(id, diskId);
+        if (!response) throw new Error(ErrorTypes.EntityNotFound);
+        
+        return response;
+    }
 }

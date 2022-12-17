@@ -9,9 +9,9 @@ export default class UserController {
     public validate = async (req: Request, res: Response, next: NextFunction) => {
         const token = req.headers.authorization;
         const tkn = token || 'fail';
-        const { discos, error } = this._service.decodedToken(tkn);
+        const { discos, nome, email, error } = this._service.decodedToken(tkn);
 
-        if (!discos) return next(error);
+        if (!discos || !nome || !email) return next(error);
 
         res.status(StatusCodes.OK).json({ discos });
     };
@@ -32,8 +32,10 @@ export default class UserController {
     
     
         const response = await this._service.create({email, senha, discos, nome});
+
+        
     
-        if (typeof response === 'object') return next(response);
+        if (typeof response === 'object') return next(response.error);
 
         return res.status(StatusCodes.CREATED).json({ token: response });
     };
@@ -44,5 +46,19 @@ export default class UserController {
 
         return res.status(StatusCodes.OK).json({ response });
     };
+
+    public updateUserDisks = async  (req: Request, res: Response) => {
+        
+        const { id, diskId } = req.body;
+    
+    
+        const response = await this._service.updateUserDisks(
+            id, diskId
+        );
+    
+
+        return res.status(StatusCodes.ACCEPTED).json(response);
+    };
+
 
 }

@@ -1,3 +1,4 @@
+import { UpdateResult } from 'mongodb';
 import { InvalidTokenError, JwtPayload } from 'jwt-decode';
 import { IDisk } from './IDisks';
 import { ErrorService, errorService } from './IErrors';
@@ -16,6 +17,7 @@ export interface IServiceUsers<T> {
     read():Promise<T[]>,
     readOne(_id:string):Promise<T>,
     update(id:string, obj:T):Promise<T>,
+    updateUserDisks(id:string, diskId: string): Promise<UpdateResult>,
     delete(id: string):Promise<T>,
     login(email:string, senha:string):Promise<string | errorService>,
     decodedToken(token: string): JwtPayload | any,

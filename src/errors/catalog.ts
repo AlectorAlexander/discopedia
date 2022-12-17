@@ -1,6 +1,7 @@
 export enum ErrorTypes {
     EntityNotFound = 'EntityNotFound',
     InvalidMongoId = 'InvalidMongoId',
+    uAlreadyHaveIt = 'uAlreadyHaveIt',
   }
   
   type ErrorResponseObject = { 
@@ -21,5 +22,9 @@ export const errorCatalog: ErrorCatalog = {
     InvalidMongoId: {
         message: 'Id must have 24 hexadecimal characters',
         httpStatus: 400,
+    },
+    uAlreadyHaveIt: {
+        message: 'You already have this disc',
+        httpStatus: 409,
     },
 };

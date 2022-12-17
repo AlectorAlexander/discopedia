@@ -13,6 +13,7 @@ const errorHandler: ErrorRequestHandler = (
     err: Error | ZodError, 
     _req,
     res,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _next,
 ) => {
     if (err instanceof ZodError) {
@@ -27,7 +28,7 @@ const errorHandler: ErrorRequestHandler = (
         const { httpStatus, message } = mappedError;
         return res.status(httpStatus).json({ error: message });
     }
-
+    
     const { message } = err;
   
     const noMessage = message || 'Internal Error';
