@@ -2,6 +2,12 @@ import { IUser } from './../interfaces/IUser';
 import { IServiceUsers } from './../interfaces/IServices';
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { sign, SignOptions } from 'jsonwebtoken';
+
+const jwtConfig: SignOptions = {
+    expiresIn: '7d',
+    algorithm: 'HS256',
+};
 
 export default class UserController {
     constructor(private _service: IServiceUsers<IUser>) { }
@@ -22,22 +28,35 @@ export default class UserController {
         const response = await this._service.login(email, senha);
     
 
-        if (typeof response === 'object') return next(response);
+        if (response && response.error) return next(response.error);
 
-        return res.status(StatusCodes.OK).json({ token: response });
+        const token = sign({
+            nome: response.nome,
+            email: response.email,
+            discos: response.discos,
+        }, 'blabla', jwtConfig);
+
+        return res.status(StatusCodes.OK).json({ token, id: response._id?.toString() });
     };
 
     public register = async  (req: Request, res: Response, next: NextFunction) => {
+        console.log('cham');
+        
         const { email, senha, discos, nome } = req.body;
     
     
         const response = await this._service.create({email, senha, discos, nome});
 
-        
     
-        if (typeof response === 'object') return next(response.error);
+        if (response && response.error) return next(response.error);
 
-        return res.status(StatusCodes.CREATED).json({ token: response });
+        const token = sign({
+            nome,
+            email,
+            discos,
+        }, 'blabla', jwtConfig);
+
+        return res.status(StatusCodes.CREATED).json({ token, id: response._id?.toString() });
     };
 
 

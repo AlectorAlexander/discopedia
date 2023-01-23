@@ -14,7 +14,7 @@ export const DiskMongooseSchema = new Schema<IDisk>({
     },  
     artist: String,
     musics: Array<string>,
-    url_image: String,
+    url_img: String,
     created: Date,
     updated: Date,
 });

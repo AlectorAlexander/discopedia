@@ -30,6 +30,7 @@ mongoose.connect(MONGO_DB_URL || 'error').then(() => {
 const newDiscos: IDisk[] = [];
 
 JSON.parse(fs.readFileSync('discos.json', 'utf-8')).forEach((ele: IDisk, i: number) => {
+    console.log(ele);
     
     newDiscos.push(ele);
     newDiscos[i].created = new Date();

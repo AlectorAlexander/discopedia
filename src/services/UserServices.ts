@@ -1,4 +1,4 @@
-import { IDisk } from './../interfaces/IDisks';
+import { createResponse } from './../interfaces/IServices';
 import { UpdateResult } from 'mongodb';
 import { ErrorTypes } from './../errors/catalog';
 import { ErrorService, errorService } from './../interfaces/IErrors';
@@ -31,7 +31,7 @@ export default class UserServices implements IServiceUsers<IUser> {
         this._User = model;
     }
 
-    public async create(obj: IUser):Promise<string | ErrorService> {
+    public async create(obj: IUser):Promise<createResponse> {
         const parsed = UserZodSchema.safeParse(obj);
     
         if (parsed.success === false) {
@@ -43,12 +43,10 @@ export default class UserServices implements IServiceUsers<IUser> {
         if (findInfo) return { error: { message: 'User already registered', status: 409 } };
         const newSenha = await bcrypt.hash(senha, saltRounds);
     
-        await this._User.create({email, senha: newSenha, discos, nome});
-        return sign({
-            nome,
-            email,
-            discos,
-        }, 'blabla', jwtConfig);
+        const response = await this._User.create({email, senha: newSenha, discos, nome});
+        
+        
+        return response;
     }
   
 
@@ -80,7 +78,7 @@ export default class UserServices implements IServiceUsers<IUser> {
         return User;
     }
 
-    public login = async (email: string, senha: string):Promise<string | errorService> => {
+    public login = async (email: string, senha: string):Promise<createResponse> => {
         const foundUser = await this.readOne( email );
         const checkPassword = foundUser ? foundUser.senha : 'THISISNOTVALIDPASSWORD';
         const validateUser: boolean = bcrypt
@@ -89,15 +87,11 @@ export default class UserServices implements IServiceUsers<IUser> {
 
         const error = { status: 401, message: 'Incorrect email or senha' };
 
-        if (!foundUser || !validateUser) return error;
+        if (!foundUser || !validateUser) return { error} ;
 
-        return sign({
-            nome: foundUser.nome,
-            email: foundUser.email,
-            discos: foundUser.discos,
-        }, 'blabla', jwtConfig);
+        return foundUser;
     };
-
+    
     public decodedToken  = (token: string): JwtPayload | any => {
         try {
             return jwt_decode(token);

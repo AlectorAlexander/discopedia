@@ -10,12 +10,12 @@ export default class DiskController {
         res: Response<IDisk>,
     ) {
         const {
-            title, details, artist, musics, created, updated, url_image
+            title, details, artist, musics, created, updated, url_img
         } = req.body;
         const newCreated = new Date(created);
         const newUpdated = new Date(updated);
         const Disk: IDisk = {
-            title, details, artist, musics, created: newCreated, updated: newUpdated, url_image
+            title, details, artist, musics, created: newCreated, updated: newUpdated, url_img
         };
         const results: any = await this._service.create(Disk);
         return res.status(201).json(results);
@@ -42,14 +42,14 @@ export default class DiskController {
         res: Response<IDisk>,
     ) {
         const {
-            title, details, artist, musics, created, updated, url_image
+            title, details, artist, musics, created, updated, url_img
         } = req.body;
     
         const { id } = req.params;
         const newCreated = new Date(created);
         const newUpdated = new Date(updated);
         const Disk: IDisk = {
-            title, details, artist, musics, created: newCreated, updated: newUpdated, url_image
+            title, details, artist, musics, created: newCreated, updated: newUpdated, url_img
         };
 
         const result = await this._service.update(id, Disk);

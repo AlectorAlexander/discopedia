@@ -36,7 +36,7 @@ export const DiskZodSchema = z.object({
         invalid_type_error: 'artist must be a string',
     }).min(1, { message: 'artist must be 1 or more characters long' }),
     musics: z.array(z.string()),
-    url_image: z.string({
+    url_img: z.string({
         required_error: 'url_image is required',
         invalid_type_error: 'url_image must be a string',
     }).min(3, { message: 'url_image must be 3 or more characters long' }),

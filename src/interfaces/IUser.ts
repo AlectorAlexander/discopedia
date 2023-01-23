@@ -1,6 +1,8 @@
+import { ObjectId } from 'mongodb';
 import { z } from 'zod';
 
 export const UserZodSchema = z.object({
+    _id: z.optional(z.instanceof(ObjectId)),
     nome: z.string({
         required_error: 'nome is required',
         invalid_type_error: 'nome must be a string',

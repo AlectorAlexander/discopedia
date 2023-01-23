@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import UserController from '../controllers/UserController';
-import DiskModel from '../models/DisksModel';
 import UserModel from '../models/UserModel';
 import UserService from '../services/UserServices';
 
