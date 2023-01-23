@@ -74,8 +74,8 @@ export default class UserController {
         const response = await this._service.updateUserDisks(
             id, diskId
         );
-    
 
+            
         return res.status(StatusCodes.ACCEPTED).json(response);
     };
 

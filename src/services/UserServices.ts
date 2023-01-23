@@ -1,9 +1,7 @@
 import { createResponse } from './../interfaces/IServices';
 import { UpdateResult } from 'mongodb';
 import { ErrorTypes } from './../errors/catalog';
-import { ErrorService, errorService } from './../interfaces/IErrors';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
-import { sign, SignOptions } from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { IUser, UserZodSchema } from '../interfaces/IUser';
 import { IServiceUsers } from '../interfaces/IServices';
@@ -17,11 +15,6 @@ const diskService = new DiskService(Disk);
 
 
 const saltRounds = 10;
-
-const jwtConfig: SignOptions = {
-    expiresIn: '7d',
-    algorithm: 'HS256',
-};
 
 
 export default class UserServices implements IServiceUsers<IUser> {
@@ -91,7 +84,7 @@ export default class UserServices implements IServiceUsers<IUser> {
 
         return foundUser;
     };
-    
+
     public decodedToken  = (token: string): JwtPayload | any => {
         try {
             return jwt_decode(token);
@@ -100,15 +93,17 @@ export default class UserServices implements IServiceUsers<IUser> {
         }
     };
 
-    public async updateUserDisks(id:string, diskId: string):Promise<UpdateResult> {
+    public async updateUserDisks(id:string, diskId: string):Promise<UpdateResult | Error> {
         const User = await this._User.readOne(id);
-        if (!User) throw new Error(ErrorTypes.EntityNotFound);
-        
-        const DiskUser = await this._User.readOneByDisco(diskId);
-        if (DiskUser) throw new Error(ErrorTypes.uAlreadyHaveIt);
+        if (!User) throw new Error(ErrorTypes.EntityNotFound);  
         
         const Disk = await diskService.readOne(diskId);
         if (!Disk) throw new Error(ErrorTypes.EntityNotFound);
+        
+        const DiskUser = await this._User.readOneByDisco(diskId);
+        if (DiskUser) throw new Error(ErrorTypes.uAlreadyHaveIt);
+
+        
         
         const response = await this._User.updateOneDisk(id, diskId);
         if (!response) throw new Error(ErrorTypes.EntityNotFound);
