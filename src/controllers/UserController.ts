@@ -3,6 +3,8 @@ import { IServiceUsers } from './../interfaces/IServices';
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { sign, SignOptions } from 'jsonwebtoken';
+import DiskService from '../services/DisksServices';
+import DiskModel from '../models/DisksModel';
 
 const jwtConfig: SignOptions = {
     expiresIn: '7d',
@@ -77,6 +79,24 @@ export default class UserController {
 
             
         return res.status(StatusCodes.ACCEPTED).json(response);
+    };
+
+    public findUserDisks = async  (req: Request, res: Response) => {
+        
+        const { id } = req.body;
+    
+    
+        const { discos } = await this._service.readOneById(
+            id
+        );
+
+        const Disk = new DiskModel();
+        const discService = new DiskService(Disk);
+
+        const discs = await discService.readMany(discos);
+
+            
+        return res.status(StatusCodes.OK).json(discs);
     };
 
 

@@ -21,6 +21,12 @@ class DiskService implements IServiceDisks<IDisk> {
         return result;
     }
 
+    public async readMany(ids: string[]): Promise<IDisk[] | null> {
+        const Disc = await this._Disk.readMany(ids);
+        if (!Disc) throw new Error(ErrorTypes.EntityNotFound);
+        return Disc;
+    }
+
     public async read():Promise<IDisk[]> {
         const Disk = await this._Disk.read();
         if (!Disk) throw new Error(ErrorTypes.EntityNotFound);

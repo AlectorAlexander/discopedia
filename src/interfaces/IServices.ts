@@ -34,7 +34,9 @@ export interface IServiceDisks<T> {
 export interface IServiceUsers<T> {
     create(obj:IUser):Promise<createResponse>,
     read():Promise<T[]>,
-    readOne(_id:string):Promise<T>,
+    readOne(email:string):Promise<T>,
+    readOneById(_id:string):Promise<T>,
+    readMany(ids:string[]):Promise<T[] | null>,
     update(id:string, obj:T):Promise<T>,
     updateUserDisks(id:string, diskId: string): Promise<UpdateResult | Error>,
     delete(id: string):Promise<T>,

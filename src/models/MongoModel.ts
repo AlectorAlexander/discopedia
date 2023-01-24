@@ -27,9 +27,18 @@ abstract class MongoModel<T> implements IModel<T> {
 
     public async readOne(_id:string):Promise<T | null> {
         if (!isValidObjectId(_id)) throw Error(ErrorTypes.InvalidMongoId);
-        const result = await this._model.findOne({ _id });
+        const result = await this._model.findOne({ _id }).select('-senha');
         return result;
     }
+
+    public async readMany(ids: string[]): Promise<T[] | null> {
+        ids.forEach(id => {
+            if (!isValidObjectId(id)) throw Error(ErrorTypes.InvalidMongoId);
+        });
+        const result = await this._model.find({ _id: { $in: ids } }).select('-senha');
+        return result;
+    }
+    
 
     public async readOneByDisco(_diskId:string):Promise<T | null> {
         if (!isValidObjectId(_diskId)) throw Error(ErrorTypes.InvalidMongoId);
@@ -38,7 +47,7 @@ abstract class MongoModel<T> implements IModel<T> {
     }
 
     public async readOneByEmail(email:string):Promise<T | null> {
-        const result = await this._model.findOne({ email });
+        const result = await this._model.findOne({ email }).select('-senha');
         return result;
     }
 

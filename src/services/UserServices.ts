@@ -9,6 +9,7 @@ import { IModel } from '../interfaces/IModel';
 import { Error } from 'mongoose';
 import DiskService from './DisksServices';
 import DiskModel from '../models/DisksModel';
+import { IDisk } from '../interfaces/IDisks';
 
 const Disk = new DiskModel();
 const diskService = new DiskService(Disk);
@@ -54,6 +55,19 @@ export default class UserServices implements IServiceUsers<IUser> {
         if (!User) throw new Error(ErrorTypes.EntityNotFound);
         return User;
     }
+
+    public async readMany(ids: string[]): Promise<IUser[] | null> {
+        const User = await this._User.readMany(ids);
+        if (!User) throw new Error(ErrorTypes.EntityNotFound);
+        return User;
+    }
+
+    public async readOneById(_id:string):Promise<IUser> {
+        const User = await this._User.readOne(_id);
+        if (!User) throw new Error(ErrorTypes.EntityNotFound);
+        return User;
+    }
+
 
     public async update(id:string, obj: IUser | object):Promise<IUser> {
         const User = await this._User.update(id, obj);

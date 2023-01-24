@@ -12,6 +12,7 @@ const UsersController = new UserController(userService);
 userRoute.post('/login', UsersController.login);
 userRoute.get('/login/validate', UsersController.validate);
 userRoute.get('/users', UsersController.findAll);
+userRoute.post('/user/disc', UsersController.findUserDisks);
 userRoute.put('/users', UsersController.updateUserDisks);
 userRoute.post('/register', UsersController.register);
 
