@@ -39,6 +39,7 @@ export interface IServiceUsers<T> {
     readMany(ids:string[]):Promise<T[] | null>,
     update(id:string, obj:T):Promise<T>,
     updateUserDisks(id:string, diskId: string): Promise<UpdateResult | Error>,
+    removeUserDisk(id:string, diskId: string):Promise<UpdateResult | Error>,
     delete(id: string):Promise<T>,
     login(email:string, senha:string):Promise<createResponse>,
     decodedToken(token: string): JwtPayload | any,

@@ -40,14 +40,14 @@ abstract class MongoModel<T> implements IModel<T> {
     }
     
 
-    public async readOneByDisco(_diskId:string):Promise<T | null> {
-        if (!isValidObjectId(_diskId)) throw Error(ErrorTypes.InvalidMongoId);
-        const result = await this._model.findOne({ discos: _diskId });
+    public async readOneByDisco(_diskId:string, userId:string):Promise<T | null> {
+        if (!isValidObjectId(_diskId) || !isValidObjectId(userId)) throw Error(ErrorTypes.InvalidMongoId);
+        const result = await this._model.findOne({_id: userId}, { discos: { $elemMatch: { _id: _diskId} } });
         return result;
     }
 
     public async readOneByEmail(email:string):Promise<T | null> {
-        const result = await this._model.findOne({ email }).select('-senha');
+        const result = await this._model.findOne({ email });
         return result;
     }
 
@@ -65,6 +65,16 @@ abstract class MongoModel<T> implements IModel<T> {
         );
         return result;
     }
+
+    public async removeOneDisk(id:string, diskId: string):Promise<UpdateResult | null> {
+        if (!isValidObjectId(id)) throw Error(ErrorTypes.InvalidMongoId);
+        const result = await this._model.updateOne(
+            { _id: id },
+            { $pull: { discos: diskId } }
+        );
+        return result;
+    }
+    
 
     public async delete(_id:string):Promise<T | null> {
         if (!isValidObjectId(_id)) throw Error(ErrorTypes.InvalidMongoId);

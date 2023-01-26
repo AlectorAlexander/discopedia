@@ -81,6 +81,17 @@ export default class UserController {
         return res.status(StatusCodes.ACCEPTED).json(response);
     };
 
+    public removeUserDisks = async (req: Request, res: Response) => {
+        const { id, diskId } = req.body;
+        
+        const response = await this._service.removeUserDisk(
+            id, diskId
+        );
+    
+        return res.status(StatusCodes.NO_CONTENT).json(response);
+    };
+    
+
     public findUserDisks = async  (req: Request, res: Response) => {
         
         const { id } = req.body;

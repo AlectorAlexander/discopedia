@@ -114,12 +114,26 @@ export default class UserServices implements IServiceUsers<IUser> {
         const Disk = await diskService.readOne(diskId);
         if (!Disk) throw new Error(ErrorTypes.EntityNotFound);
         
-        const DiskUser = await this._User.readOneByDisco(diskId);
+        const DiskUser = await this._User.readOneByDisco(diskId, id);
         if (DiskUser) throw new Error(ErrorTypes.uAlreadyHaveIt);
-
-        
         
         const response = await this._User.updateOneDisk(id, diskId);
+        if (!response) throw new Error(ErrorTypes.EntityNotFound);
+        
+        return response;
+    }
+
+    public async removeUserDisk(id:string, diskId: string):Promise<UpdateResult | Error> {
+        const User = await this._User.readOne(id);
+        if (!User) throw new Error(ErrorTypes.EntityNotFound);  
+        
+        const Disk = await diskService.readOne(diskId);
+        if (!Disk) throw new Error(ErrorTypes.EntityNotFound);
+
+        const DiskUser = await this._User.readOneByDisco(diskId, id);
+        if (!DiskUser) throw new Error(ErrorTypes.EntityNotFound);
+        
+        const response = await this._User.removeOneDisk(id, diskId);
         if (!response) throw new Error(ErrorTypes.EntityNotFound);
         
         return response;

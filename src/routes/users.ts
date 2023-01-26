@@ -13,7 +13,8 @@ userRoute.post('/login', UsersController.login);
 userRoute.get('/login/validate', UsersController.validate);
 userRoute.get('/users', UsersController.findAll);
 userRoute.post('/user/disc', UsersController.findUserDisks);
-userRoute.put('/users', UsersController.updateUserDisks);
+userRoute.delete('/user/disc', UsersController.removeUserDisks);
+userRoute.put('/user/disc', UsersController.updateUserDisks);
 userRoute.post('/register', UsersController.register);
 
 export default userRoute;
