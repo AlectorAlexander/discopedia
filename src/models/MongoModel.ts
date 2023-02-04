@@ -1,3 +1,4 @@
+import { IDisk } from './../interfaces/IDisks';
 import { isValidObjectId, Model } from 'mongoose';
 import { IModel } from '../interfaces/IModel';
 import { ErrorTypes } from '../errors/catalog';
@@ -24,12 +25,53 @@ abstract class MongoModel<T> implements IModel<T> {
         const result = await this._model.find({ });
         return result;
     }
+    
 
     public async readOne(_id:string):Promise<T | null> {
         if (!isValidObjectId(_id)) throw Error(ErrorTypes.InvalidMongoId);
         const result = await this._model.findOne({ _id }).select('-senha');
         return result;
     }
+
+    public async readPagination(page: number, limit: number): Promise<T[]> {
+        const result = await this._model.find({ }).skip((page - 1) * limit).limit(limit);
+        return result;
+    }
+
+    public async readMultiple(params: Record<string, any>): Promise<Array<IDisk> | null> {
+        const query: Record<string, any> = {};
+        for (const key in params) {
+            if (key === 'title') {
+                query[key] = { $regex: new RegExp(params[key], 'i') };
+            } else if (key === 'artist') {
+                query[key] = { $regex: new RegExp(params[key], 'i') };
+            } else if (key === 'details.Caracteristica') {
+                query['details.Caracteristica'] = { $regex: new RegExp(params[key], 'i') };
+            } else if (key === 'details.Formatos') {
+                query['details.Formatos'] = { $regex: new RegExp(params[key], 'i') };
+            }
+            else if (key === 'details.Gravadora') {
+                query['details.Gravadora'] = { $regex: new RegExp(params[key], 'i') };
+            }
+            else if (key === 'details.Produtor') {
+                query['details.Produtor'] = { $regex: new RegExp(params[key], 'i') };
+            }
+            else if (key === 'details.Lancamento') {
+                query['details.Lancamento'] = {
+                    '$gte': params[key][0],
+                    '$lte': params[key][1]
+                };
+            }
+            else if (key === 'musics') {
+                query['musics'] = { $elemMatch: { $regex: new RegExp(params[key], 'i') } };
+            }
+        }
+        console.log(query); // { details: { Caracteristica: { '$regex': /instrumental/i } } }
+        const result = await this._model.find(query) as unknown as IDisk[];
+        return result;
+    }
+    
+    
 
     public async readMany(ids: string[]): Promise<T[] | null> {
         ids.forEach(id => {

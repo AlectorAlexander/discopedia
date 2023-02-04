@@ -27,6 +27,12 @@ class DiskService implements IServiceDisks<IDisk> {
         return Disc;
     }
 
+    public async readPaginationpage(page: number, limit: number): Promise<IDisk[]> {
+        const Discs = await this._Disk.readPagination(page, limit);
+        if (!Discs) throw new Error(ErrorTypes.EntityNotFound);
+        return Discs;
+    }
+
     public async read():Promise<IDisk[]> {
         const Disk = await this._Disk.read();
         if (!Disk) throw new Error(ErrorTypes.EntityNotFound);
@@ -35,6 +41,12 @@ class DiskService implements IServiceDisks<IDisk> {
 
     public async readOne(_id:string):Promise<IDisk> {
         const Disk = await this._Disk.readOne(_id);
+        if (!Disk) throw new Error(ErrorTypes.EntityNotFound);
+        return Disk;
+    }
+
+    public async readMultiple(params: Record<string, any>):Promise<IDisk[]> {
+        const Disk = await this._Disk.readMultiple(params);
         if (!Disk) throw new Error(ErrorTypes.EntityNotFound);
         return Disk;
     }

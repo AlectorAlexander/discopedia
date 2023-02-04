@@ -37,6 +37,25 @@ export default class DiskController {
         return res.status(200).json(result);
     }
 
+    public async readPaginationOnPage(
+        req: Request,
+        res: Response<IDisk[]>,
+    ) {
+        const { page, limit } = req.body;
+        const result = await this._service.readPaginationpage(page, limit);
+        return res.status(200).json(result);
+    }
+
+    public async readMultiples(
+        req: Request,
+        res: Response<IDisk[]>,
+    ) {
+        const { params } = req.body;
+        console.log(params);
+        const result = await this._service.readMultiple(params);
+        return res.status(200).json(result);
+    }
+
     public async update(
         req: Request,
         res: Response<IDisk>,

@@ -6,6 +6,7 @@ import diskRoute from './routes/disks';
 import userRoute from './routes/users';
 import cors from 'cors';
 import errorHandler from './errors/error';
+import 'module-alias/register';
 
 const app = express();
 app.use(express.urlencoded({ extended: false }));

@@ -8,7 +8,7 @@ export const DiskMongooseSchema = new Schema<IDisk>({
         Caracteristica: String,
         Formatos: String,
         Gravadora: String,
-        Lancamento: String,
+        Lancamento: Number,
         Observacao: String,
         Produtor: String,
     },  

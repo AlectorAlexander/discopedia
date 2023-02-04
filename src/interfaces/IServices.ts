@@ -26,6 +26,8 @@ export interface updateResponse {
 export interface IServiceDisks<T> {
     create(obj:IDisk):Promise<T>,
     read():Promise<T[]>,
+    readMultiple(params: Record<string, any>):Promise<IDisk[]>,
+    readPaginationpage(page: number, limit: number): Promise<IDisk[]>,
     readOne(_id:string):Promise<T>,
     update(id:string, obj:T):Promise<T>,
     delete(id: string):Promise<T>,

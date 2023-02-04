@@ -1,6 +1,8 @@
+import { ObjectId } from 'mongodb';
 import { z } from 'zod';
 
 export const DiskZodSchema = z.object({
+    _id: z.string().optional(),
     title: z.string({
         required_error: 'title is required',
         invalid_type_error: 'title must be a string',
@@ -22,9 +24,9 @@ export const DiskZodSchema = z.object({
             required_error: 'Formato is required',
             invalid_type_error: 'Formato must be a string',
         }).min(1, { message: 'Formato must be 1 or more characters long' }),
-        Lancamento: z.string({
+        Lancamento: z.number({
             required_error: 'Lançamento is required',
-            invalid_type_error: 'Lançamento must be a string',
+            invalid_type_error: 'Lançamento must be a number',
         }).min(1, { message: 'Lançamento must be 1 or more characters long' }),
         Observacao: z.string({
             required_error: 'Observação is required',

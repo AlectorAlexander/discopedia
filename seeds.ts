@@ -12,7 +12,7 @@ const details = discos.map((el) => {
         Caracteristica: el.details['Característica:'],
         Formatos: el.details['Formatos:'],
         Gravadora: el.details['Gravadora:'] || '',
-        Lancamento: el.details['Lançamento:'],
+        Lancamento: Number(el.details['Lançamento:']),
         Observacao: el.details['Observação:'],
         Produtor: el.details['Produtor:'],
     };
