@@ -9,7 +9,6 @@ import { IModel } from '../interfaces/IModel';
 import { Error } from 'mongoose';
 import DiskService from './DisksServices';
 import DiskModel from '../models/DisksModel';
-import { IDisk } from '../interfaces/IDisks';
 
 const Disk = new DiskModel();
 const diskService = new DiskService(Disk);

@@ -1,0 +1,1 @@
+horaEmPalavras(7, 29)

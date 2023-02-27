@@ -11,6 +11,9 @@ const jwtConfig: SignOptions = {
     algorithm: 'HS256',
 };
 
+const { JWT_SECRET } = process.env;
+
+
 export default class UserController {
     constructor(private _service: IServiceUsers<IUser>) { }
 
@@ -36,7 +39,7 @@ export default class UserController {
             nome: response.nome,
             email: response.email,
             discos: response.discos,
-        }, 'blabla', jwtConfig);
+        }, JWT_SECRET || 'null', jwtConfig);
 
         return res.status(StatusCodes.OK).json({ token, id: response._id?.toString() });
     };
@@ -56,7 +59,7 @@ export default class UserController {
             nome,
             email,
             discos,
-        }, 'blabla', jwtConfig);
+        }, JWT_SECRET || 'null', jwtConfig);
 
         return res.status(StatusCodes.CREATED).json({ token, id: response._id?.toString() });
     };

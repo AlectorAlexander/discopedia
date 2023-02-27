@@ -17,6 +17,7 @@ export const DiskMongooseSchema = new Schema<IDisk>({
     url_img: String,
     created: Date,
     updated: Date,
+    album_link: String,
 });
 
 class DiskModel extends MongoModel<IDisk> {
