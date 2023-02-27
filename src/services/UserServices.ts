@@ -114,8 +114,9 @@ export default class UserServices implements IServiceUsers<IUser> {
         if (!Disk) throw new Error(ErrorTypes.EntityNotFound);
         
         const DiskUser = await this._User.readOneByDisco(diskId, id);
-        if (DiskUser) throw new Error(ErrorTypes.uAlreadyHaveIt);
-        
+        if (DiskUser && DiskUser.discos.length ) {
+            throw new Error(ErrorTypes.uAlreadyHaveIt);
+        }
         const response = await this._User.updateOneDisk(id, diskId);
         if (!response) throw new Error(ErrorTypes.EntityNotFound);
         

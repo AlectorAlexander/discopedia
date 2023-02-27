@@ -45,7 +45,6 @@ export default class UserController {
     };
 
     public register = async  (req: Request, res: Response, next: NextFunction) => {
-        console.log('cham');
         
         const { email, senha, discos, nome } = req.body;
     
@@ -98,7 +97,7 @@ export default class UserController {
     public findUserDisks = async  (req: Request, res: Response) => {
         
         const { id } = req.body;
-    
+        
     
         const { discos } = await this._service.readOneById(
             id

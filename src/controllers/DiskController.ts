@@ -42,6 +42,8 @@ export default class DiskController {
         res: Response<IDisk[]>,
     ) {
         const { page, limit } = req.body;
+        
+        
         const result = await this._service.readPaginationpage(page, limit);
         return res.status(200).json(result);
     }
@@ -51,7 +53,6 @@ export default class DiskController {
         res: Response<IDisk[]>,
     ) {
         const { params } = req.body;
-        console.log(params);
         const result = await this._service.readMultiple(params);
         return res.status(200).json(result);
     }

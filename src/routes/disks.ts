@@ -14,7 +14,7 @@ diskRoute.post('/disks', tokenValidation, (req, res) => DisksController.create(r
 diskRoute.get('/disks', tokenValidation, (req, res) => DisksController.read(req, res));
 diskRoute.get('/disks/:id', tokenValidation, (req, res) => DisksController.readOne(req, res));
 diskRoute.post('/disks/params', tokenValidation, (req, res) => DisksController.readMultiples(req, res));
-diskRoute.post('/disks/pagination', tokenValidation, (req, res) => DisksController.readPaginationOnPage(req, res));
+diskRoute.post('/disks/pagination', (req, res) => DisksController.readPaginationOnPage(req, res));
 diskRoute.put('/disks/:id', tokenValidation, (req, res) => DisksController.update(req, res));
 diskRoute.delete('/disks/:id', tokenValidation, (req, res) => DisksController.delete(req, res));
 
