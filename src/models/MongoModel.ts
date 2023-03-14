@@ -66,7 +66,10 @@ abstract class MongoModel<T> implements IModel<T> {
                 query['musics'] = { $elemMatch: { $regex: new RegExp(params[key], 'i') } };
             }
         }
+        
         const result = await this._model.find(query) as unknown as IDisk[];
+        console.log(query);
+        console.log(result.length);
         return result;
     }
     
