@@ -14,7 +14,7 @@ userRoute.post('/login', UsersController.login);
 userRoute.get('/login/validate', UsersController.validate);
 userRoute.get('/users', tokenValidation, UsersController.findAll);
 userRoute.post('/user/disc', tokenValidation, UsersController.findUserDisks);
-userRoute.delete('/user/disc', UsersController.removeUserDisks);
+userRoute.put('/user/discDelete', UsersController.removeUserDisks);
 userRoute.put('/user/disc', tokenValidation, UsersController.updateUserDisks);
 userRoute.post('/register', UsersController.register);
 
