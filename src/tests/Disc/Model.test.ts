@@ -30,6 +30,7 @@ describe('DiskModel', () => {
             artist: 'Test Artist',
             musics: ['Test Music 1', 'Test Music 2'],
             url_img: 'Test URL',
+            album_link: 'www.youtube.com.br',
             created: new Date(),
             updated: new Date(),
         };
