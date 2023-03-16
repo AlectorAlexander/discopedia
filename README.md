@@ -295,6 +295,44 @@ usuário "logado" poderia ter acesso aos dados dessa (e variantes dessa) rota.
 ]
 
  ```
+ 
+ # Endpoint (`/login`)
 
+# A rota do tipo `POST`
+
+- O body da requisição deve conterá o seguinte formato:
+  ```json
+  {
+    "email": 'user@gmail.com',
+    "senha": "queijo_suiço"
+  }
+  ```
+- Saídas
+   - Sua API deve responder com status http `200` e o seguinte body:
+ ```JSON
+   {
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21lIjoiQWxiZXJ0byBKdXN0dXMiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBZG1pbmlzdHJhZG9yIiwiaWF0IjoxNjY4Mjc2OTQyLCJleHAiOjE2Njg4ODE3NDJ9.LbOZ2nUZOP1UGhAlobTeNF35J5OIa4WKopYrDNLxuwk"
+}
+ ```
+ # Endpoint (`/register`)
+
+# A rota do tipo `POST`
+
+- O body da requisição deve conterá o seguinte formato:
+  ```json
+  {
+      "nome": "alberto",
+      "email": "alberto@gmail.com",
+      "role": "user",
+      "senha": "queijo_suiço"
+    }
+  ```
+- Saídas
+   - Sua API deve responder com status http `200` e o seguinte body:
+ ```JSON
+   {
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21lIjoiQWxiZXJ0byBKdXN0dXMiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBZG1pbmlzdHJhZG9yIiwiaWF0IjoxNjY4Mjc2OTQyLCJleHAiOjE2Njg4ODE3NDJ9.LbOZ2nUZOP1UGhAlobTeNF35J5OIa4WKopYrDNLxuwk"
+}
+ ```
 
   
