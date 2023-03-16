@@ -29,6 +29,14 @@ Nesse parte do projeto utilizei as seguintes habilidades e conhecimentos:
  explicitamente em cada rota: `express-async-errors`.
 
 ---
+# Utilizando a aplicação
+Para ver a aplicação funcionando:
+- Clone esse repositório `git clone git@github.com:AlectorAlexander/discopedia.git`
+- Entre na pasta `**/discopedia**`
+- abra o terminal nessa pasta
+- instale as dependências `npm install`
+- starte a aplicação com `npm start`
+- espere aparecer a mensagem no terminal `Running server on port: 3001`
 ## Rotas do Backend
 
 Lembrando que todas as rotas que começam com `/disks` precisam de validação de Token. O que significa que apenas um 
@@ -334,5 +342,6 @@ usuário "logado" poderia ter acesso aos dados dessa (e variantes dessa) rota.
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21lIjoiQWxiZXJ0byBKdXN0dXMiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBZG1pbmlzdHJhZG9yIiwiaWF0IjoxNjY4Mjc2OTQyLCJleHAiOjE2Njg4ODE3NDJ9.LbOZ2nUZOP1UGhAlobTeNF35J5OIa4WKopYrDNLxuwk"
 }
  ```
+ 
 
   
