@@ -3,7 +3,7 @@
 # Contexto
 
 API, parte de um projeto Fullstack, objetivando um CRUD, que alimenta uma aplicação, que funciona como uma enciclopédia de 
-discos (pelo menos, essa é a idéia).
+discos.
 
 # Habilidades:
 
