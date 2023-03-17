@@ -68,8 +68,6 @@ abstract class MongoModel<T> implements IModel<T> {
         }
         
         const result = await this._model.find(query) as unknown as IDisk[];
-        console.log(query);
-        console.log(result.length);
         return result;
     }
     
