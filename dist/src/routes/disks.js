@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const DiskController_1 = __importDefault(require("../controllers/DiskController"));
+const tokenValidation_1 = __importDefault(require("../midlewares/tokenValidation"));
+const DisksModel_1 = __importDefault(require("../models/DisksModel"));
+const DisksServices_1 = __importDefault(require("../services/DisksServices"));
+const diskRoute = (0, express_1.Router)();
+const Disk = new DisksModel_1.default();
+const diskService = new DisksServices_1.default(Disk);
+const DisksController = new DiskController_1.default(diskService);
+diskRoute.post('/disks', tokenValidation_1.default, (req, res) => DisksController.create(req, res));
+diskRoute.get('/disks', tokenValidation_1.default, (req, res) => DisksController.read(req, res));
+diskRoute.get('/disks/:id', tokenValidation_1.default, (req, res) => DisksController.readOne(req, res));
+diskRoute.post('/disks/params', tokenValidation_1.default, (req, res) => DisksController.readMultiples(req, res));
+diskRoute.post('/disks/pagination', (req, res) => DisksController.readPaginationOnPage(req, res));
+diskRoute.put('/disks/:id', tokenValidation_1.default, (req, res) => DisksController.update(req, res));
+diskRoute.delete('/disks/:id', tokenValidation_1.default, (req, res) => DisksController.delete(req, res));
+exports.default = diskRoute;
